@@ -11,27 +11,22 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  // Rukovanje unosom
   const handleInput = (e) => {
     const newUserData = { ...userData };
     newUserData[e.target.name] = e.target.value;
     setUserData(newUserData);
   };
 
-  // Rukovanje prijavom
   const handleLogin = (e) => {
     e.preventDefault();
     axios
       .post('http://127.0.0.1:8000/api/login', userData)
       .then((response) => {
         if (response.data.success === true) {
-          // Čuvanje tokena i uloge u sessionStorage
           window.sessionStorage.setItem('auth_token', response.data.access_token);
           window.sessionStorage.setItem('role', response.data.role);
           window.sessionStorage.setItem('user_id', response.data.data.id);
-
-          // Navigacija nakon uspešne prijave
-          navigate('/video');
+          navigate('/kursevi');
         } else {
           setErrorMessage('Pogrešan email ili lozinka.');
         }
@@ -42,43 +37,46 @@ const Login = () => {
       });
   };
 
-  // Navigacija ka registraciji
   const handleRegisterRedirect = () => {
     navigate('/register');
   };
 
   return (
-    <div className="login-container">
+    <div className="login-page">
       <div className="login-card">
-        <h2 className="login-title">Dobrodošli nazad</h2>
-        <p className="login-subtitle">Prijavite se na svoj nalog</p>
-        {errorMessage && <p className="login-error">{errorMessage}</p>} {/* Prikazivanje greške */}
-        <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            name="email"
-            placeholder="Email"
-            className="login-input"
-            value={userData.email}
-            onChange={handleInput}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Lozinka"
-            className="login-input"
-            value={userData.password}
-            onChange={handleInput}
-            required
-          />
+        <h1 className="login-title">Dobrodošli!</h1>
+        <p className="login-subtitle">Prijavite se kako biste nastavili svoje obrazovanje.</p>
+        {errorMessage && <p className="login-error">{errorMessage}</p>}
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="form-group">
+            <input
+              type="text"
+              name="email"
+              id="email"
+              placeholder="Email"
+              value={userData.email}
+              onChange={handleInput}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Lozinka"
+              value={userData.password}
+              onChange={handleInput}
+              required
+            />
+          </div>
           <button type="submit" className="login-button">
             Prijavi se
           </button>
         </form>
-        <p className="login-footer">
+        <p className="register-text">
           Nemate nalog?{' '}
-          <button className="register-link" onClick={handleRegisterRedirect}>
+          <button onClick={handleRegisterRedirect} className="register-link">
             Registrujte se
           </button>
         </p>

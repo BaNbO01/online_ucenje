@@ -1,0 +1,146 @@
+/* Globalni stilovi */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f8f9fc;
+    color: #333;
+  }
+  
+  /* Glavni kontejner */
+  .home-page {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  .main-content {
+    display: flex;
+    width: 100vw;
+    overflow-x: hidden;
+    margin: 0px auto; /* Centriranje sadržaja */
+    padding: 0 20px; /* Dodavanje margina sa strane */
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    flex-shrink: 0; /* Sprečava skupljanje */
+    padding: 15px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-right: 20px;
+    height: fit-content; /* Prilagođava visinu sadržaju */
+  }
+  
+  .sidebar h3, .sidebar h4 {
+    color: #4a90e2;
+    margin-bottom: 15px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f0f3f5;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .sidebar li:hover {
+    background: #e0e7f5;
+  }
+  
+  .reset-button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+  
+  .reset-button:hover {
+    background: #c0392b;
+  }
+  
+  /* Sekcija kurseva */
+  .courses-section {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .courses-section h2 {
+    margin-bottom: 20px;
+    color: #4a90e2;
+    text-align: center;
+  }
+  
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Kartice kurseva */
+  .course-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .course-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .course-info {
+    padding: 15px;
+  }
+  
+  .course-info h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 25px;
+  }
+  
+  .course-info p {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .course-dates {
+    font-size: 12px;
+    color: #999;
+  }
+  .sidebar li {
+    cursor: pointer;
+  }
+  
+  .sidebar li.selected {
+    font-weight: bold;
+    color: #007bff;
+  }
+  a{
+    text-decoration: none;
+  }

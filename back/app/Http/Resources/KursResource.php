@@ -21,7 +21,9 @@ class KursResource extends JsonResource
             'putanja_do_slike' => asset($this->putanja_do_slike),
             'predavac' => new UserResource($this->predavac), 
             'casovi' => CasResource::collection($this->casovi), 
-            'kategorije' => KategorijaResource::collection($this->kategorije), // Povezane kategorije, koristi KategorijaResource ako su učitane
+            'kategorije' => KategorijaResource::collection($this->kategorije),
+            'kreirano' => $this->created_at,
+            'azurirano' => $this->updated_at,// Povezane kategorije, koristi KategorijaResource ako su učitane
         ];
     }
 }

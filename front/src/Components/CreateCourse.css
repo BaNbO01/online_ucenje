@@ -1,0 +1,132 @@
+/* Glavni kontejner za formu */
+.napravi-kurs {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Naslov stranice */
+  .page-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Glavni stil za formu */
+  .create-course-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 40vw;
+    margin: 0 auto;
+  }
+  
+  /* Stilizacija za form group */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  /* Labela za inpute */
+  .form-label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* Input polja */
+  .form-input,
+  .form-textarea,
+  .form-select,
+  .form-file-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Fokusirani inputi, select i textarea */
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus,
+  .form-file-input:focus {
+    border-color: #4CAF50;
+    outline: none;
+  }
+  
+  /* Dugme za submit */
+  .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Stilizacija za textarea */
+  .form-textarea {
+    height: 150px;
+    resize: vertical;
+  }
+  
+  /* Input za sliku */
+  .form-file-input {
+    padding: 0;
+    background-color: #f7f7f7;
+  }
+  
+  .form-file-input::file-selector-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .form-file-input::file-selector-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Fokus na formu */
+  .create-course-form {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: white;
+  }
+  
+  .create-course-form:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Margine između elemenata */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  form button {
+    margin-top: 20px;
+  }
+  

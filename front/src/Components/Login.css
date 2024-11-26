@@ -1,105 +1,111 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #6b73ff, #000dff);
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .login-card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 30px;
-    width: 850px;
-    text-align: center;
-  }
-  
-  .login-title {
-    font-size: 44px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .login-subtitle {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 20px;
-  }
-  
-  .login-input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border 0.3s ease;
-  }
-  
-  .login-input:focus {
-    border: 1px solid #6b73ff;
-    outline: none;
-  }
-  
-  .login-button {
-    width: 100%;
-    padding: 10px;
-    background: #6b73ff;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .login-button:hover {
-    background: #5551ff;
-  }
-  
-  .login-footer {
-    margin-top: 15px;
-    font-size: 18px;
-    color: #777;
-  }
-  
-  .login-footer a {
-    color: #6b73ff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .login-footer a:hover {
-    text-decoration: underline;
-  }
-  .register-link {
-    background-color: #6b73ff;
-    margin-top: 20px;
-    color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px 20px;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .register-link:hover {
-    background-color: #6b73ff;
-    color: #fff;
-    border-color: #333;
-  }
-  
-  .register-link:active {
-    background-color: #444;
-        
-  }
-  
-  
+/* Pozadina stranice */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f0f3f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Kontejner */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.login-card {
+  background: #f0f3f5;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+  width: 400px;
+  text-align: center;
+}
+
+.login-title {
+  font-size: 24px;
+  color: #5d5fef;
+  margin-bottom: 10px;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.login-error {
+  color: #d9534f;
+  background: #ffe6e6;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* Polja za unos */
+.login-form .form-group {
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  font-size: 14px;
+  box-shadow: inset 6px 6px 12px #d1d9e6, inset -6px -6px 12px #ffffff;
+  outline: none;
+  background: #f0f3f5;
+  transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+  box-shadow: inset 6px 6px 12px #c8cfdc, inset -6px -6px 12px #ffffff;
+}
+
+/* Dugme */
+.login-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  background: linear-gradient(145deg, #6a6dff, #585aec);
+  color: #fff;
+  box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  background: linear-gradient(145deg, #585aec, #6a6dff);
+  box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff;
+}
+
+/* Link za registraciju */
+.register-text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.register-link {
+  background: none;
+  color: #5d5fef;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.register-link:hover {
+  color: #4a4cdf !important;
+  background-color: rgb(0, 0,0,0 ) !important;
+}

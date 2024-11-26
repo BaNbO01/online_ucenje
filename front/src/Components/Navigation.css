@@ -1,0 +1,54 @@
+/* Navigacija */
+.navigation {
+    background: #f0f3f5;
+    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Lista linkova */
+  .nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Stavka navigacije */
+  .nav-item {
+    text-decoration: none;
+    font-size: 16px;
+    color: #5d5fef;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  /* Hover efekat */
+  .nav-item:hover {
+    color: #ffffff;
+    background: linear-gradient(145deg, #6a6dff, #585aec);
+    box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
+  }
+  .logout-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 8px 16px;
+    background-color: #f44336; /* Crvena boja */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .logout-button:hover {
+    background-color: #e53935;
+  }
+  

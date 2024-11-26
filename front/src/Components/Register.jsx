@@ -12,39 +12,39 @@ const Register = () => {
   const [error, setError] = useState(''); // Poruka o grešci za korisnika
   const navigate = useNavigate(); // Hook za navigaciju
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+    const handleRegister = async (e) => {
+      e.preventDefault();
 
-    // Provera da li se lozinke poklapaju
-    if (password !== passwordConfirmation) {
-      setError('Lozinke se ne poklapaju.');
-      return;
-    }
-
-    console.log('Slanje registracije za:', username, email, role);
-
-    try {
-      // Slanje POST zahteva za registraciju
-      const response = await axios.post('http://localhost:8000/api/register', {
-        username: username,
-        email: email,
-        password: password,
-        role: role,
-      });
-
-      // Ako je registracija uspešna
-      if (response.data.success) {
-        console.log('Registracija uspešna');
-        localStorage.setItem('auth_token', response.data.access_token); // Čuvanje tokena
-        navigate('/'); // Redirekcija na početnu stranicu
-      } else {
-        setError('Greška pri registraciji: ' + JSON.stringify(response.data.data)); // Prikaz greške
+      // Provera da li se lozinke poklapaju
+      if (password !== passwordConfirmation) {
+        setError('Lozinke se ne poklapaju.');
+        return;
       }
-    } catch (error) {
-      console.error('Greška pri registraciji:', error);
-      setError('Došlo je do greške prilikom registracije. Pokušajte ponovo.'); // Generička greška
-    }
-  };
+
+      console.log('Slanje registracije za:', username, email, role);
+
+      try {
+        // Slanje POST zahteva za registraciju
+        const response = await axios.post('http://localhost:8000/api/register', {
+          username: username,
+          email: email,
+          password: password,
+          role: role,
+        });
+
+        // Ako je registracija uspešna
+        if (response.data.success) {
+          console.log('Registracija uspešna');
+          localStorage.setItem('auth_token', response.data.access_token); // Čuvanje tokena
+          navigate('/'); // Redirekcija na početnu stranicu
+        } else {
+          setError('Greška pri registraciji: ' + JSON.stringify(response.data.data)); // Prikaz greške
+        }
+      } catch (error) {
+        console.error('Greška pri registraciji:', error);
+        setError('Došlo je do greške prilikom registracije. Pokušajte ponovo.'); // Generička greška
+      }
+    };
 
   return (
     <div className="register-container">

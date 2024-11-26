@@ -1,0 +1,43 @@
+/* FavoriteCourses.css */
+
+/* Sekcija kurseva */
+.courses-section {
+    flex-grow: 1;
+  }
+  
+  .courses-section h2 {
+    margin-bottom: 20px;
+    color: #4a90e2;
+    text-align: center;
+  }
+  
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Kartice kurseva */
+  .course-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .course-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .course-info {
+    padding: 15px;
+  }
+  

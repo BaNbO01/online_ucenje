@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\KursResource;
+use App\Http\Resources\UserResource;
+
 class UserController extends Controller
 {
     public function destroy($id)
@@ -51,7 +53,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => KursResouce::collection($omiljeniKursevi->paginate(10)),
+            'data' => KursResource::collection($omiljeniKursevi->paginate(10)),
         ], 200);
     } catch (\Exception $e) {
         return response()->json([
@@ -76,9 +78,7 @@ public function mojiKursevi(Request $request)
             'message' => 'Došlo je do greške prilikom dobijanja kurseva ulogovanog korisnika.',
             'error' => $e->getMessage(),
         ], 500);
-    }
-
-   
+    }  
 }
 
 
@@ -111,5 +111,15 @@ public function ukloniIzFavorita($id)
     }
 }
 
+public function getTeachers()
+{
+    $teachers = User::where('role', 'nastavnik')->get();
+    return UserResource::collection($teachers);
+}
 
+public function getStudents()
+{
+    $students = User::where('role', 'student')->get();
+    return UserResource::collection($students);
+}
 }
