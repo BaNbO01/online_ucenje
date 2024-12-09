@@ -1,0 +1,40 @@
+.lesson-details {
+ 
+    font-family: 'Arial', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f7fb;
+    color: #333;
+
+  }
+  
+  .video-container {
+    margin: 20px 0;
+  }
+  
+  .materials-section {
+    margin-top: 30px;
+  }
+  
+  .materials-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .materials-section li {
+    margin: 10px 0;
+  }
+  
+  .material-link {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .material-link:hover {
+    text-decoration: none;
+  }
+  

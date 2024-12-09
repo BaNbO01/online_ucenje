@@ -130,3 +130,13 @@
     margin-top: 20px;
   }
   
+
+  .form-group ul li{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #45a049;
+    border: 3px solid #133315;
+    color:white;
+    margin: 5px;
+  }

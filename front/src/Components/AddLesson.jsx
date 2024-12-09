@@ -1,23 +1,72 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
+import axios from "axios";
+
 import "./AddLesson.css";
 import Navigation from "./Navigation";
 
 const AddLesson = () => {
   const [lessonName, setLessonName] = useState("");
   const [lessonDescription, setLessonDescription] = useState("");
-  const [lessonVideo, setLessonVideo] = useState(null); // Za video
+  const [materials, setMaterials] = useState([]);
+  const { courseId } = useParams();  // Materijali
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Ovdje možete dodati logiku za slanje podataka na server
-    console.log("Novi čas:", { lessonName, lessonDescription, lessonVideo });
-    navigate("/course-details"); // Nakon dodavanja časa, vraćamo korisnika na detalje kursa
+  const handleMaterialChange = (index, field, value) => {
+    const updatedMaterials = [...materials];
+    updatedMaterials[index] = {
+      ...updatedMaterials[index],
+      [field]: value,
+    };
+    setMaterials(updatedMaterials);
   };
 
-  const handleFileChange = (e) => {
-    setLessonVideo(e.target.files[0]);
+  const handleAddMaterial = () => {
+    setMaterials([...materials, { naziv: "", file: null }]);
+  };
+
+  const handleRemoveMaterial = (index) => {
+    const updatedMaterials = materials.filter((_, i) => i !== index);
+    setMaterials(updatedMaterials);
+  };
+
+  const handleFileChange = (index, file) => {
+    const updatedMaterials = [...materials];
+    updatedMaterials[index].file = file;
+    setMaterials(updatedMaterials);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append("naziv", lessonName);
+      formData.append("opis", lessonDescription);
+      formData.append("kurs_id", courseId);
+
+      materials.forEach((material, index) => {
+        formData.append(`materijali[${index}][naziv]`, material.naziv);
+        formData.append(`materijali[${index}][file]`, material.file);
+      });
+
+      const authToken = window.sessionStorage.getItem("auth_token");
+      const response = await axios.post(
+        `http://localhost:8000/api/casovi`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Response:", response.data);
+      navigate("/course-details"); // Nakon uspešnog dodavanja
+    } catch (error) {
+      console.error("Došlo je do greške:", error.response?.data || error.message);
+    }
   };
 
   return (
@@ -46,22 +95,59 @@ const AddLesson = () => {
               onChange={(e) => setLessonDescription(e.target.value)}
               placeholder="Unesite opis časa"
               rows="4"
-              required
             ></textarea>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="lessonVideo">Video čas</label>
-            <input
-              type="file"
-              id="lessonVideo"
-              accept="video/*" // Prihvatamo samo video fajlove
-              onChange={handleFileChange}
-              required
-            />
+         
+
+          <div className="materials-section">
+            <h3>Materijali</h3>
+            {materials.map((material, index) => (
+              <div key={index} className="material-item">
+                <div className="form-group">
+                  <label htmlFor={`materialName-${index}`}>Naziv materijala</label>
+                  <input
+                    type="text"
+                    id={`materialName-${index}`}
+                    value={material.naziv}
+                    onChange={(e) =>
+                      handleMaterialChange(index, "naziv", e.target.value)
+                    }
+                    placeholder="Unesite naziv materijala"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor={`materialFile-${index}`}>Fajl materijala</label>
+                  <input
+                    type="file"
+                    id={`materialFile-${index}`}
+                    accept=".pdf,.mp4"
+                    onChange={(e) => handleFileChange(index, e.target.files[0])}
+                    required
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="remove-material-button"
+                  onClick={() => handleRemoveMaterial(index)}
+                >
+                  Ukloni materijal
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              className="add-material-button"
+              onClick={handleAddMaterial}
+            >
+              Dodaj novi materijal
+            </button>
           </div>
 
-          <button type="submit" className="submit-button">Dodaj čas</button>
+          <button type="submit" className="submit-button">
+            Dodaj čas
+          </button>
         </form>
       </div>
     </div>

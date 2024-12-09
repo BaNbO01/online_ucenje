@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('kursevi/{id}', [KursController::class, 'show']);
 
     Route::delete('/casovi/{id}', [CasController::class, 'destroy']);
+    Route::get('/casovi/{id}', [CasController::class, 'show']);
     Route::post('/casovi', [CasController::class, 'store']);
 
     Route::delete('/materijali/{id}', [MaterijalController::class, 'delete']);

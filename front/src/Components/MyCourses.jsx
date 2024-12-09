@@ -96,10 +96,10 @@ const MyCourses = () => {
           <h2>Moji kursevi</h2>
           <div className="courses-grid">
             {filteredCourses.map((course) => (
-              <Link to={'/kursevi/${course.id}'}>
+              <Link to={`/kursevi/${course.id}`}>
               <div key={course.id} className="course-card">
                 <img
-                  src={course.image || "https://via.placeholder.com/300"}
+                  src={course.putanja_do_slike || "https://via.placeholder.com/300"}
                   alt={course.title}
                   className="course-image"
                 />

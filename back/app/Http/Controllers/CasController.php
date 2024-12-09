@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Cas;
 use App\Models\Kurs;
 use App\Models\Materijal;
+use App\Http\Resources\CasResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -126,6 +127,22 @@ private function uploadFajl($file, $naziv, $kurs, $cas)
     return str_replace('public/', 'storage/', $pathFile);
   
 
+}
+
+
+public function show($id){
+    try{
+        $cas = Cas::findOrFail($id);
+        return new CasResource($cas);
+
+    }
+    catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Došlo je do greške prilikom dobijanja casa.',
+            'error' => $e->getMessage(),
+        ], 500);
+    }  
 }
 
 

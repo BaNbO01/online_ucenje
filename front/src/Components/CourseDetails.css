@@ -121,3 +121,17 @@ button {
 .delete-course-button:hover {
   background-color: #c82333;
 }
+
+
+/* Hiperlink za časove */
+.lesson-link {
+  font-size: 1rem;
+  color: #4a90e2;
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.lesson-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
