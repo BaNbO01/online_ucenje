@@ -46,14 +46,8 @@ class UserController extends Controller
     try {
         
         $user = Auth::user();
+        return KursResource::collection($user->omiljeniKursevi()->paginate(5));
        
-       
-        
-
-        return response()->json([
-            'success' => true,
-            'data' => KursResource::collection($user->omiljeniKursevi()->paginate(10)),
-        ], 200);
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,

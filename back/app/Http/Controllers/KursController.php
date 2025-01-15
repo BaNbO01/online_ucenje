@@ -120,10 +120,9 @@ class KursController extends Controller
             $kursevi = $query->paginate(10);
     
         
-            return response()->json([
-                'success' => true,
-                'data' => KursResource::collection($kursevi),
-            ]);
+           
+                return KursResource::collection($kursevi);
+           
         } catch (\Exception $e) {
          
             return response()->json([
