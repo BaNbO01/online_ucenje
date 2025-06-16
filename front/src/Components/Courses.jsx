@@ -50,6 +50,25 @@ const Courses = () => {
       }
     };
 
+      axios.get("http://localhost:8000/api/kategorije", {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((response) => setCategories(response.data.data))
+      .catch((error) => {
+        console.error("Greška prilikom dobijanja kategorija:", error);
+      });
+
+    // Dohvatanje nastavnika
+    axios
+      .get("http://localhost:8000/api/users/nastavnici", {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((response) => setTeachers(response.data.data))
+      .catch((error) => {
+        console.error("Greška prilikom dobijanja nastavnika:", error);
+      });
+  
+
     fetchCourses();
   }, [pagination.currentPage, authToken]);
 
