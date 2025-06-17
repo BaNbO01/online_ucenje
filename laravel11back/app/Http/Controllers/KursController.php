@@ -23,13 +23,10 @@ class KursController extends Controller
         $user = Auth::user();
 
         
-        if ($user->id !== $kurs->user_id && !$user->jeRole('admin')) {
+        if ($user->id === $kurs->user_id || $user->jeRole('admin')) {
            
-            return response()->json([
-                'success' => false,
-                'message' => 'Nemate prava da obrišete ovaj kurs.'
-            ], 403); 
-        }
+          
+      
        
         $kurs->casovi->each(function ($cas) {
           
@@ -70,6 +67,13 @@ class KursController extends Controller
         $kurs->delete();
 
         return response()->json(['message' => 'Kurs i svi povezani resursi su uspešno obrisani.'], 200);
+  }
+        else{
+              return response()->json([
+                'success' => false,
+                'message' => 'Nemate prava da obrišete ovaj kurs.'
+            ], 403); 
+        }
     } catch (\Exception $e) {
         Log::error('Greška prilikom brisanja kursa: ' . $e->getMessage());
         return response()->json(['message' => 'Došlo je do greške prilikom brisanja kursa.', 'error' => $e->getMessage()], 500);
@@ -150,7 +154,12 @@ class KursController extends Controller
 
        
         $user = Auth::user();
-
+        if(!$user->jeRole('nastavnik')){
+              return response()->json([
+                'success' => false,
+                'message' => 'Nemate prava da kreirate kurs.'
+            ], 403); 
+        }
         
         $kurs = Kurs::create([
             'naziv' => $request->naziv,

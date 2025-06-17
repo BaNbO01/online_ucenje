@@ -20,12 +20,9 @@ class MaterijalController extends Controller
             $user = Auth::user();
 
            
-            if (!$user->jeRole("admin") && $user->id !== $materijal->cas->kurs->user_id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Nemate dozvolu da obrišete ovaj materijal.',
-                ], 403);
-            }
+            if ($user->jeRole("admin") || $user->id === $materijal->cas->kurs->user_id) {
+             
+           
 
             $putanjaFajla = public_path($materijal->putanja);
                 $putanja = str_replace('/', '\\', $putanjaFajla); 
@@ -37,6 +34,13 @@ class MaterijalController extends Controller
                 'success' => true,
                 'message' => 'Materijal je uspešno obrisan.',
             ], 200);
+        }
+            else{
+                   return response()->json([
+                    'success' => false,
+                    'message' => 'Nemate dozvolu da obrišete ovaj materijal.',
+                ], 403);
+            }
 
         } catch (\Exception $e) {
             return response()->json([
@@ -55,32 +59,43 @@ class MaterijalController extends Controller
         $materijal = Materijal::findOrFail($id);
         $user = Auth::user();
         $prijava = $user->prijave()
-                            ->where('kurs_id', $materijal->cas->kurs->kurs_id)
+                            ->where('kurs_id', $materijal->cas->kurs->id)
                             ->where('zahtev', 'primljen')
                             ->first();
 
-        if ($materijal->tip !== 'video/mp4') {
-            return response()->json(['error' => 'Materijal nije video'], 400);
+                if($prijava || $materijal->cas->kurs->predavac->id===$user->id || $user->jeRole('admin')){
+                               
+                          
+
+                            if ($materijal->tip !== 'video/mp4') {
+                                return response()->json(['error' => 'Materijal nije video'], 400);
+                            }
+
+                            $relativePath = $materijal->putanja;
+                            $absolutePath = public_path($relativePath); // Konvertuje u apsolutnu putanju
+                        
+                            Log::info("Pokušavam da učitam fajl sa putanje: $absolutePath");
+
+                        
+                            if (!File::exists($absolutePath)) {
+                                return response()->json(['error' => 'Fajl ne postoji'], 404);
+                            }
+
+                        
+                            return response()->stream(function () use ($absolutePath) {
+                                readfile($absolutePath);
+                            }, 200, [
+                                'Content-Type' => 'video/mp4',
+                                'Accept-Ranges' => 'bytes',
+                                'Content-Length' => filesize($absolutePath),
+                            ]);
+    }
+        else{
+               return response()->json([
+                                    'success' => false,
+                                    'message' => 'Nemate dozvolu da pristupite ovom casu.'
+                                ], 403);
         }
-
-        $relativePath = $materijal->putanja;
-        $absolutePath = public_path($relativePath); // Konvertuje u apsolutnu putanju
-      
-        Log::info("Pokušavam da učitam fajl sa putanje: $absolutePath");
-
-      
-        if (!File::exists($absolutePath)) {
-            return response()->json(['error' => 'Fajl ne postoji'], 404);
-        }
-
-       
-        return response()->stream(function () use ($absolutePath) {
-            readfile($absolutePath);
-        }, 200, [
-            'Content-Type' => 'video/mp4',
-            'Accept-Ranges' => 'bytes',
-            'Content-Length' => filesize($absolutePath),
-        ]);
     } catch (\Exception $e) {
         Log::error('Greška prilikom učitavanja videa: ' . $e->getMessage());
         return response()->json(['error' => 'Došlo je do greške prilikom učitavanja videa.'], 500);
@@ -107,7 +122,7 @@ public function store(Request $request)
         $fajl = $request->file('file');
 
         $user = Auth::user();
-        if (!$user->jeRole("nastavnik") && $user->id !== $cas->kurs->user_id) {
+        if (!($user->jeRole("nastavnik") && $user->id == $cas->kurs->user_id)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Nemate dozvolu da dodate materijal.',
@@ -157,7 +172,7 @@ private function uploadFajl($file, $naziv, $cas)
         Storage::makeDirectory($path);
     }
 
-    $filePath = $file->storeAs($pathFile, $filename,"public");
+    $filePath = $file->storeAs($path, $filename,"public");
 
     return Storage::url($filePath);
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cas;
+use App\Models\User;
 use App\Models\Kurs;
 use App\Models\Materijal;
 use App\Http\Resources\CasResource;
@@ -23,18 +24,23 @@ class CasController extends Controller
         $user = Auth::user();
 
         
-        if ($user->id !== $kurs->user_id && !$user->jeRole('admin')) {
+        if ($user->id=== $kurs->user_id || $user->jeRole('admin')) {
           
-            return response()->json([
-                'success' => false,
-                'message' => 'Nemate prava da obrišete ovaj čas.'
-            ], 403);  
-        }
+          
+       
         $cas->delete();
         return response()->json([
             'success' => true,
             'message' => 'Čas uspešno obrisan.'
         ], 200);
+
+         }
+        else{
+              return response()->json([
+                'success' => false,
+                'message' => 'Nemate prava da obrišete ovaj čas.'
+            ], 403);  
+        }
 
     } catch (\Exception $e) {
       
@@ -67,13 +73,10 @@ public function store(Request $request)
         $user = Auth::user();
 
         $kurs = Kurs::findOrFail($request->kurs_id);
-        if ($user->id !== $kurs->user_id && !$user->jeRole('admin')) {
+        if ($user->id === $kurs->user_id || $user->jeRole('admin')) {
           
-            return response()->json([
-                'success' => false,
-                'message' => 'Nemate prava da sacuvate čas.'
-            ], 403);  
-        }
+          
+        
         
         $cas = Cas::create([
             'naziv' => $request->naziv,
@@ -103,6 +106,15 @@ public function store(Request $request)
             'cas' => $cas,
             'materijali' => $materijaliData,
         ], 201);
+
+        }
+
+        else{
+              return response()->json([
+                'success' => false,
+                'message' => 'Nemate prava da sacuvate čas.'
+            ], 403);  
+        }
     }catch (\Exception $e) {
       
         return response()->json([
@@ -141,18 +153,25 @@ public function show($id){
     try{
          $cas = Cas::findOrFail($id);
         $user = Auth::user();
+       
+       
         $prijava = $user->prijave()
-                            ->where('kurs_id', $cas->kurs->kurs_id)
+                            ->where('kurs_id', $cas->kurs->id)
                             ->where('zahtev', 'primljen')
                             ->first();
-         if (!$prijava) {
-            return response()->json([
+                           
+            
+         if ($prijava || $cas->kurs->predavac->id===$user->id || $user->jeRole('admin')) {
+            return new CasResource($cas);
+        }
+        else{
+             return response()->json([
                 'success' => false,
-                'message' => 'Nemate dozvolu da pristupite ovom casu jer niste primljeni na kurs.'
+                'message' => 'Nemate dozvolu da pristupite ovom casu.',
             ], 403);
         }
        
-        return new CasResource($cas);
+       
 
     }
     catch (\Exception $e) {

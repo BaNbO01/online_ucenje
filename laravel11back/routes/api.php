@@ -9,7 +9,7 @@ use App\Http\Controllers\KursController;
 use App\Http\Controllers\CasController;
 use App\Http\Controllers\MaterijalController;
 use App\Http\Controllers\PrijavaController;
-use App\Http\Controllers\TestController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,9 +37,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/kursevi', [KursController::class, 'getKursevi']);
     Route::get('kursevi/{id}', [KursController::class, 'show']);
 
-    Route::delete('/casovi/{id}', [CasController::class, 'destroy']);
-    Route::get('/casovi/{id}', [CasController::class, 'show']);
-    Route::post('/casovi', [CasController::class, 'store']);
+   
+    Route::apiResource('casovi', CasController::class)->only([
+            'store', 'show', 'destroy'
+        ]);
 
     Route::delete('/materijali/{id}', [MaterijalController::class, 'delete']);
     Route::get('/materijali/video/{id}', [MaterijalController::class, 'getVideo'])->name('materijal.video');
@@ -60,9 +61,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/prijave/moje-prijave', [PrijavaController::class, 'mojePrijave']);
 
-    Route::post('/testovi',[TestController::class,'store']);
-    Route::get('/testovi/kurs/{kurs_id}', [TestController::class, 'prikaziTest']);
-    Route::post('/testovi/provera/{test_id}', [TestController::class, 'proveraZnanja']);
 
 });
 
